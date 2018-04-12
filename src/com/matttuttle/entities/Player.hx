@@ -1,11 +1,11 @@
 package com.matttuttle.entities;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
-import com.haxepunk.Sfx;
-import com.haxepunk.utils.Input;
-import com.haxepunk.utils.Key;
+import haxepunk.HXP;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
+import haxepunk.Sfx;
+import haxepunk.input.Input;
+import haxepunk.input.Key;
 import com.matttuttle.entities.items.Item;
 import com.matttuttle.entities.enemies.Enemy;
 import com.matttuttle.entities.Physics;
@@ -14,7 +14,7 @@ import com.matttuttle.entities.weapons.Knives;
 import com.matttuttle.entities.weapons.Sword;
 import com.matttuttle.entities.weapons.Weapon;
 import com.matttuttle.entities.weapons.Whip;
-import flash.geom.Point;
+import haxepunk.math.Vector2;
 
 class Player extends Character
 {
@@ -34,10 +34,10 @@ class Player extends Character
 		super(x, y);
 
 		sfx = new Map<String,Sfx>();
-		sfx.set("jump", new Sfx(#if flash "sfx/player/jump.mp3" #else "sfx/player/jump.wav" #end));
-		sfx.set("levelUp", new Sfx(#if flash "sfx/player/level_up.mp3" #else "sfx/player/level_up.wav" #end));
-		sfx.set("death", new Sfx(#if flash "sfx/player/death.mp3" #else "sfx/player/death.wav" #end));
-		sfx.set("hurt", new Sfx(#if flash "sfx/hurt.mp3" #else "sfx/hurt.wav" #end));
+		sfx.set("jump", new Sfx("sfx/player/jump.wav"));
+		sfx.set("levelUp", new Sfx("sfx/player/level_up.wav"));
+		sfx.set("death", new Sfx("sfx/player/death.wav"));
+		sfx.set("hurt", new Sfx("sfx/hurt.wav"));
 
 		flags = new Array<String>();
 		_weapons = new Array<Weapon>();
@@ -68,13 +68,13 @@ class Player extends Character
 		drag.x = kMoveSpeed * 3; // floor friction
 		//drag.y = 0.02; // wall friction
 
-		Input.define("left", [Key.LEFT]);
-		Input.define("right", [Key.RIGHT]);
-		Input.define("up", [Key.UP]);
-		Input.define("down", [Key.DOWN]);
-		Input.define("jump", [Key.X]);
-		Input.define("switch", [Key.SPACE]);
-		Input.define("attack", [Key.C]);
+		Key.define("left", [Key.LEFT, Key.A]);
+		Key.define("right", [Key.RIGHT, Key.D]);
+		Key.define("up", [Key.UP, Key.W]);
+		Key.define("down", [Key.DOWN, Key.S]);
+		Key.define("jump", [Key.X, Key.J]);
+		Key.define("switch", [Key.SPACE, Key.L]);
+		Key.define("attack", [Key.C, Key.K]);
 
 		type = "player";
 		setHitbox(3, 8, -2);
@@ -187,6 +187,8 @@ class Player extends Character
 			facing = RIGHT;
 			acceleration.x = drag.x;
 		}
+
+		if (acceleration.x == 0) velocity.x = 0;
 
 		_up = false;
 		if (Input.check("up"))
@@ -325,9 +327,9 @@ class Player extends Character
 	private function setAnimation()
 	{
 		if (facing == LEFT)
-			sprite.flipped = true;
+			sprite.flipX = true;
 		else
-			sprite.flipped = false;
+			sprite.flipX = false;
 
 
 		if (weapon != null && weapon.isUsing)

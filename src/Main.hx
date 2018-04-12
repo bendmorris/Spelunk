@@ -1,15 +1,22 @@
-import com.haxepunk.Engine;
-import com.haxepunk.HXP;
+import haxepunk.Engine;
+import haxepunk.Graphic;
+import haxepunk.HXP;
 
 class Main extends Engine
 {
+	public function new()
+	{
+		super(210, 120, 60, true);
+	}
 
 	override public function init()
 	{
 #if debug
 		HXP.console.enable();
 #end
-		HXP.screen.scale = 3;
+		Graphic.smoothDefault = false;
+		Graphic.pixelSnappingDefault = true;
+
 		HXP.scene = new com.matttuttle.scenes.Game();
 	}
 
@@ -17,5 +24,4 @@ class Main extends Engine
 	{
 		new Main();
 	}
-
 }

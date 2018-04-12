@@ -1,11 +1,12 @@
 package com.matttuttle.entities;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Image;
-import flash.display.BitmapData;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import haxepunk.HXP;
+import haxepunk.Entity;
+import haxepunk.graphics.Image;
+import haxepunk.graphics.text.BitmapText;
+import haxepunk.utils.Color;
+import haxepunk.math.Vector2;
+import haxepunk.math.Rectangle;
 
 class HitPointText extends Entity
 {
@@ -16,42 +17,24 @@ class HitPointText extends Entity
 	{
 		var text:String;
 		var textY:Int;
-		var fontSet:BitmapData = HXP.getBitmap("gfx/gui/hit_points.png");
 
 		super(x, y);
 		text = Std.string(damage);
+		var c:Color;
 		if (damage >= 0)
 		{
 			text = "-" + text;
 			textY = 0;
+			c = 0xff0000;
 		}
 		else
 		{
 			textY = 5;
+			c = 0x00ff00;
 		}
 
-		var tmp:BitmapData = HXP.createBitmap(text.length * 5, 5, true, 0xf);
-
-		var grabData:Array<Rectangle> = new Array<Rectangle>();
-		var chars:String = "-0123456789";
-		var c:Int;
-		for (c in 0...chars.length)
-			grabData[chars.charCodeAt(c)] = new Rectangle(c * 4, textY, 4, 5);
-
-		for (c in 0...text.length)
-		{
-			//	If it's a space then there is no point copying, so leave a blank space
-			if (text.charAt(c) != " ")
-			{
-				//	If the character doesn't exist in the font then we don't want a blank space, we just want to skip it
-				if (grabData[text.charCodeAt(c)] != null)
-				{
-					tmp.copyPixels(fontSet, grabData[text.charCodeAt(c)], new Point(c * 5, 0));
-				}
-			}
-		}
-
-		graphic = _image = new Image(tmp);
+		graphic = new BitmapText(text, 0, 0, 0, 0, {size: 8});
+		graphic.color = c;
 		_timer = kLife;
 	}
 
@@ -65,14 +48,13 @@ class HitPointText extends Entity
 
 		y -= 2;
 		_timer -= HXP.elapsed;
-		_image.alpha = _timer / kLife;
+		graphic.alpha = _timer / kLife;
 		if (_timer < 0)
 			dead = true;
 
 		super.update();
 	}
 
-	private var _image:Image;
 	private var _timer:Float;
 	private static inline var kLife:Float = 0.6;
 

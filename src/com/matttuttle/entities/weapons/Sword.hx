@@ -1,8 +1,8 @@
 package com.matttuttle.entities.weapons;
 
-import com.haxepunk.HXP;
-import com.haxepunk.graphics.Spritemap;
-import com.haxepunk.Sfx;
+import haxepunk.HXP;
+import haxepunk.graphics.Spritemap;
+import haxepunk.Sfx;
 import com.matttuttle.entities.Player;
 
 class Sword extends Melee
@@ -13,7 +13,8 @@ class Sword extends Melee
 		super("Sword");
 		_animName = "sword";
 
-		sprite = new Spritemap("gfx/items/sword.png", 12, 8, onSpriteEnd);
+		sprite = new Spritemap("gfx/items/sword.png", 12, 8);
+		sprite.onAnimationComplete.bind(onSpriteEnd);
 		switch(type)
 		{
 			case "sword":		sprite.add(_animName, [0, 2, 4, 6], 10, false);
@@ -29,18 +30,18 @@ class Sword extends Melee
 		if (sprite.visible)
 		{
 			x = _player.x;
-			if (sprite.flipped) x -= 4;
+			if (sprite.flipX) x -= 4;
 			y = _player.y;
 			switch(sprite.frame)
 			{
 				case 0:
-					setHitbox(4, 3, (sprite.flipped) ? -8 : 0, -4);
+					setHitbox(4, 3, (sprite.flipX) ? -8 : 0, -4);
 				case 1:
-					setHitbox(7, 3, (sprite.flipped) ? -3 : -2, -3);
+					setHitbox(7, 3, (sprite.flipX) ? -3 : -2, -3);
 				case 2:
-					setHitbox(7, 3, (sprite.flipped) ? 0 : -5, -2);
+					setHitbox(7, 3, (sprite.flipX) ? 0 : -5, -2);
 				case 3:
-					setHitbox(7, 3, (sprite.flipped) ? 0 : -5, -3);
+					setHitbox(7, 3, (sprite.flipX) ? 0 : -5, -3);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.graphics.Spritemap;
 
 class Wolf extends Enemy
 {

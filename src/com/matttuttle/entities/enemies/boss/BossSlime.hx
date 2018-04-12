@@ -1,7 +1,7 @@
 package com.matttuttle.entities.enemies.boss;
 
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
 
 class BossSlime extends Enemy
 {

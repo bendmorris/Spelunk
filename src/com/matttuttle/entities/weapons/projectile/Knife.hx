@@ -1,25 +1,25 @@
 package com.matttuttle.entities.weapons.projectile;
 
-import com.haxepunk.HXP;
-import com.haxepunk.graphics.Spritemap;
-import com.haxepunk.Sfx;
-import flash.geom.Point;
+import haxepunk.HXP;
+import haxepunk.graphics.Spritemap;
+import haxepunk.Sfx;
+import haxepunk.math.Vector2;
 
 class Knife extends Weapon
 {
 
 	public var sprite:Spritemap;
 
-	public function new(x:Float, y:Float, vel:Point, offset:Int)
+	public function new(x:Float, y:Float, vel:Vector2, offset:Int)
 	{
 		super("Knife");
 		this.x = x;
 		this.y = y;
 
 		sfx = new Map<String,Sfx>();
-		sfx.set("throw", new Sfx("sfx/knife/throw"));
-		sfx.set("hit", new Sfx("sfx/knife/knife_hit"));
-		sfx.set("thud", new Sfx("sfx/knife/thud"));
+		sfx.set("throw", new Sfx("sfx/knife/throw.wav"));
+		sfx.set("hit", new Sfx("sfx/knife/knife_hit.wav"));
+		sfx.set("thud", new Sfx("sfx/knife/thud.wav"));
 		sfx.get("throw").play();
 
 		sprite = new Spritemap("gfx/items/knife.png", 5, 5);

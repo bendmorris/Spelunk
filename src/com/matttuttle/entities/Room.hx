@@ -1,12 +1,12 @@
 package com.matttuttle.entities;
 
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Graphiclist;
-import com.haxepunk.graphics.Image;
-import com.haxepunk.masks.Grid;
-import com.haxepunk.utils.Key;
-import com.haxepunk.HXP;
-import com.haxepunk.graphics.Tilemap;
+import haxepunk.Entity;
+import haxepunk.graphics.Graphiclist;
+import haxepunk.graphics.Image;
+import haxepunk.masks.Grid;
+import haxepunk.HXP;
+import haxepunk.graphics.tile.Backdrop;
+import haxepunk.graphics.tile.Tilemap;
 import com.matttuttle.Bounds;
 import com.matttuttle.entities.enemies.boss.BossSlime;
 import com.matttuttle.entities.enemies.Bat;
@@ -18,8 +18,7 @@ import com.matttuttle.entities.items.Coin;
 import com.matttuttle.entities.items.Gem;
 import com.matttuttle.entities.items.Orb;
 import com.matttuttle.entities.items.Powerup;
-import flash.display.BitmapData;
-import flash.geom.Point;
+import haxepunk.math.Vector2;
 import haxe.xml.Fast;
 
 class Room extends Entity
@@ -31,21 +30,20 @@ class Room extends Entity
 	public var tileWidth:Int;
 	public var tileHeight:Int;
 
-	public var start:Point;
+	public var start:Vector2;
 
 	public function new(player:Player)
 	{
 		super(0, 0);
 
 		_player = player;
-		_tileset = HXP.getBitmap("gfx/tilesets/cave.png");
 		exitBounds = new Bounds();
 		levelBounds = new Bounds();
 
 		if (!backgrounds.exists("cave"))
 		{
-			backgrounds.set("cave", new Image("gfx/background/cave.png"));
-			backgrounds.set("sky", new Image("gfx/background/mountains.png"));
+			backgrounds.set("cave", new Backdrop("gfx/background/cave.png"));
+			backgrounds.set("sky", new Backdrop("gfx/background/mountains.png"));
 		}
 
 		layer = 500;
@@ -79,8 +77,8 @@ class Room extends Entity
 			graphic = backgrounds.get(_data.att.background);
 			if (graphic != null)
 			{
-				graphic.scrollX = 0.2;
-				graphic.scrollY = 0.15;
+				graphic.scrollX = 0.25;
+				graphic.scrollY = 0.125;
 			}
 		}
 
@@ -161,7 +159,7 @@ class Room extends Entity
 	{
 		tileWidth = Std.parseInt(group.att.tileWidth);
 		tileHeight = Std.parseInt(group.att.tileHeight);
-		var map:Tilemap = new Tilemap(HXP.getBitmap("gfx/tilesets/cave.png"), width, height, tileWidth, tileHeight);
+		var map:Tilemap = new Tilemap("gfx/tilesets/cave.png", width, height, tileWidth, tileHeight);
 
 		for (obj in group.elements)
 		{
@@ -243,7 +241,7 @@ class Room extends Entity
 				case "spikes":		_entities.push(new Spikes(x, y));
 
 				// PLAYER
-				case "player":		start = new Point(); start.x = x; start.y = y;
+				case "player":		start = new Vector2(); start.x = x; start.y = y;
 				case "savePoint":	_entities.push(new SavePoint(x, y));
 				case "exit":		loadExit(x, y, obj);
 
@@ -281,11 +279,10 @@ class Room extends Entity
 	}
 
 	private var _data:Fast;
-	private var _tileset:BitmapData;
 	private var _player:Player;
 	private var _entities:Array<Entity>;
 	private var _exits:Array<Exit>;
 
-	private static var backgrounds:Map<String,Image> = new Map<String,Image>();
+	private static var backgrounds:Map<String,Backdrop> = new Map<String,Backdrop>();
 
 }

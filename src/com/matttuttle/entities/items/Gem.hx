@@ -1,24 +1,24 @@
 package com.matttuttle.entities.items;
 
-import com.haxepunk.HXP;
+import haxepunk.HXP;
 import com.matttuttle.entities.Player;
 
 class Gem extends Item
 {
-	
+
 	public var shineWait:Float;
 
-	public function new(x:Float, y:Float, ?colorName:String) 
+	public function new(x:Float, y:Float, ?colorName:String)
 	{
 		super(x, y);
-		
+
 		if (colorName == null)
 		{
 			var type:Int = Math.floor(Math.random() * 6);
 			var types:Array<String> = ["blue", "purple", "red", "yellow", "green", "orange"];
 			colorName = types[type];
 		}
-		
+
 		switch(colorName)
 		{
 			case "blue":
@@ -41,20 +41,20 @@ class Gem extends Item
 				sprite.add("shine", [73, 74, 75, 76], 12);
 		}
 		sprite.play("gem");
-		
+
 		shineWait = Math.random() * 4 + 2;
 	}
-	
+
 	public override function apply(player:Player)
 	{
 	}
-	
-	public override function onSpriteEnd()
+
+	public override function onSpriteEnd(_)
 	{
-		if (sprite.currentAnim == "shine")
+		if (sprite.currentAnimation.ensure().name == "shine")
 			sprite.play("gem");
 	}
-	
+
 	public override function update()
 	{
 		shineWait -= HXP.elapsed;
@@ -65,5 +65,5 @@ class Gem extends Item
 		}
 		super.update();
 	}
-	
+
 }

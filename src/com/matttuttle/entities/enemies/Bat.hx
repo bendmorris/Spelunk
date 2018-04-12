@@ -1,8 +1,8 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.HXP;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
 
 enum State
 {
@@ -19,7 +19,8 @@ class Bat extends Enemy
 	public function new(x:Float, y:Float, target:Entity)
 	{
 		super(x, y, 4, false);
-		sprite = new Spritemap("gfx/enemies/bat.png", 8, 8, onSpriteEnd);
+		sprite = new Spritemap("gfx/enemies/bat.png", 8, 8);
+		sprite.onAnimationComplete.bind(onSpriteEnd);
 		sprite.add("sleep", [0]);
 		sprite.add("open", [0, 1], 2);
 		sprite.add("fly", [2, 3], 6);
@@ -38,9 +39,9 @@ class Bat extends Enemy
 		setHitbox(5, 8);
 	}
 
-	private function onSpriteEnd()
+	private function onSpriteEnd(_)
 	{
-		switch(sprite.currentAnim)
+		switch(sprite.currentAnimation.ensure().name)
 		{
 			case "open":
 				_state = CHASE;

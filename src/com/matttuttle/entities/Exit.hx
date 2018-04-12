@@ -1,6 +1,6 @@
 package com.matttuttle.entities;
 
-import com.haxepunk.Entity;
+import haxepunk.Entity;
 
 class Exit extends Entity
 {

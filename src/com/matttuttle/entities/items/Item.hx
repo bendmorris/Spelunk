@@ -1,7 +1,7 @@
 package com.matttuttle.entities.items;
 
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
 import com.matttuttle.entities.Player;
 
 class Item extends Entity
@@ -13,7 +13,8 @@ class Item extends Entity
 	public function new(x:Float, y:Float, float:Bool = true)
 	{
 		super(x, y);
-		sprite = new Spritemap("gfx/items/pickups.png", 8, 8, onSpriteEnd);
+		sprite = new Spritemap("gfx/items/pickups.png", 8, 8);
+		sprite.onAnimationComplete.bind(onSpriteEnd);
 		graphic = sprite;
 
 		_moveY = 0.1;
@@ -26,7 +27,7 @@ class Item extends Entity
 	}
 
 	public function apply(player:Player) { }
-	public function onSpriteEnd() { }
+	public function onSpriteEnd(_) { }
 
 	override public function update()
 	{

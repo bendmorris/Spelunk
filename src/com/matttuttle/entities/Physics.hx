@@ -1,8 +1,9 @@
 package com.matttuttle.entities;
 
-import com.haxepunk.Entity;
-import com.haxepunk.HXP;
-import flash.geom.Point;
+import haxepunk.Entity;
+import haxepunk.HXP;
+import haxepunk.math.MathUtil;
+import haxepunk.math.Vector2;
 
 enum Direction
 {
@@ -15,10 +16,10 @@ enum Direction
 class Physics extends Entity
 {
 
-	public var velocity:Point;
-	public var acceleration:Point;
-	public var drag:Point;
-	public var maxVelocity:Point;
+	public var velocity:Vector2;
+	public var acceleration:Vector2;
+	public var drag:Vector2;
+	public var maxVelocity:Vector2;
 
 	public var facing:Direction;
 
@@ -31,10 +32,10 @@ class Physics extends Entity
 	{
 		super(x, y);
 
-		velocity = new Point();
-		acceleration = new Point();
-		drag = new Point();
-		maxVelocity = new Point(10000, 10000);
+		velocity = new Vector2();
+		acceleration = new Vector2();
+		drag = new Vector2();
+		maxVelocity = new Vector2(10000, 10000);
 
 		facing = RIGHT;
 	}
@@ -66,7 +67,7 @@ class Physics extends Entity
 		if (xd != 0)
 		do
 		{
-			if (collide("solid", x + HXP.sign(xd), y) != null)
+			if (collide("solid", x + MathUtil.sign(xd), y) != null)
 			{
 				onWall = true;
 				velocity.x = 0;
@@ -82,7 +83,7 @@ class Physics extends Entity
 			}
 			else
 			{
-				x += HXP.sign(xd);
+				x += MathUtil.sign(xd);
 			}
 			i += 1;
 		} while (i < Math.abs(xd));
@@ -91,7 +92,7 @@ class Physics extends Entity
 		if (yd != 0)
 		do
 		{
-			if (collide("solid", x, y + HXP.sign(yd)) != null)
+			if (collide("solid", x, y + MathUtil.sign(yd)) != null)
 			{
 				velocity.y = 0;
 				if (yd > 0)
@@ -105,7 +106,7 @@ class Physics extends Entity
 				}
 				break;
 			}
-			else if (yd > 0 && collide("ledge", x, y + HXP.sign(yd)) != null)
+			else if (yd > 0 && collide("ledge", x, y + MathUtil.sign(yd)) != null)
 			{
 				velocity.y = 0;
 				hitBottom();
@@ -113,7 +114,7 @@ class Physics extends Entity
 			}
 			else
 			{
-				y += HXP.sign(yd);
+				y += MathUtil.sign(yd);
 			}
 			i += 1;
 		} while (i < Math.abs(yd));

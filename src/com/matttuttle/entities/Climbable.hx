@@ -1,8 +1,8 @@
 package com.matttuttle.entities;
 
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.TiledImage;
-import flash.geom.Rectangle;
+import haxepunk.Entity;
+import haxepunk.graphics.tile.TiledImage;
+import haxepunk.math.Rectangle;
 
 class Climbable extends Entity
 {

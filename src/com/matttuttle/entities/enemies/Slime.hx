@@ -1,8 +1,8 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.HXP;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
 
 class Slime extends Enemy
 {
@@ -23,7 +23,8 @@ class Slime extends Enemy
 		super(x, y, color * 2 + 1);
 
 		var anim:Int = color * 6;
-		sprite = new Spritemap("gfx/enemies/slime.png", 8, 8, onFinished);
+		sprite = new Spritemap("gfx/enemies/slime.png", 8, 8);
+		sprite.onAnimationComplete.bind(onFinished);
 		sprite.add("idle", [anim + 0, anim + 1], 8);
 		sprite.add("jump", [anim + 0, anim + 1, anim + 2], 8);
 		sprite.add("fall", [anim + 2]);
@@ -38,9 +39,9 @@ class Slime extends Enemy
 		maxVelocity.y = JUMP_ACCELERATION;
 	}
 
-	public function onFinished()
+	public function onFinished(_)
 	{
-		if (sprite.currentAnim == "poof")
+		if (sprite.currentAnimation.ensure().name == "poof")
 			scene.remove(this);
 	}
 

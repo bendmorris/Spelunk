@@ -10,12 +10,12 @@
 
   <source path="src" />
 
+  <set name="hxp_extras"/>
   <haxelib name="openfl" />
   <haxelib name="HaxePunk" />
 
   <assets path="assets/graphics" rename="gfx" include="*.png|*.jpg" />
-  <assets path="assets/audio" rename="sfx" include="*.mp3" if="flash" />
-  <assets path="assets/audio" rename="sfx" include="*.wav|*.ogg" unless="flash" />
+  <assets path="assets/audio" rename="sfx" include="*.wav|*.ogg" />
   <assets path="assets/font" rename="font" include="*.ttf" />
   <assets path="assets/levels" rename="levels" include="*.oel" type="text" />
 

@@ -1,10 +1,10 @@
 package com.matttuttle.entities.weapons;
 
-import com.haxepunk.HXP;
+import haxepunk.HXP;
 import com.matttuttle.entities.Player;
 import com.matttuttle.entities.Physics;
 import com.matttuttle.entities.weapons.projectile.Knife;
-import flash.geom.Point;
+import haxepunk.math.Vector2;
 
 class Knives extends Weapon
 {
@@ -38,13 +38,13 @@ class Knives extends Weapon
 	public override function use(direction:Direction)
 	{
 		// Flip hand up if we're just standing idle
-		if (_player.sprite.currentAnim == "idle")
+		if (_player.sprite.currentAnimation.ensure().name == "idle")
 		{
 			_animating = 0.1;
 			_player.sprite.play("knife");
 		}
-		var knifeVel:Point = new Point();
-		var knifePos:Point = new Point(x, y);
+		var knifeVel:Vector2 = new Vector2();
+		var knifePos:Vector2 = new Vector2(x, y);
 		var knifeVelocity:Int = 360;
 		switch(direction)
 		{

@@ -1,7 +1,7 @@
 package com.matttuttle.scenes;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Scene;
+import haxepunk.HXP;
+import haxepunk.Scene;
 import com.matttuttle.Bounds;
 import com.matttuttle.entities.Exit;
 import com.matttuttle.entities.Room;
@@ -9,9 +9,10 @@ import com.matttuttle.entities.Player;
 
 class Game extends Scene
 {
-
 	public function new()
 	{
+		haxepunk.pixel.PixelArtScaler.globalActivate();
+
 		super();
 		_player = new Player("gfx/player/boy_white.png", 512, 328);
 		add(_player);
@@ -46,7 +47,7 @@ class Game extends Scene
 		var direction:Collision = _room.exitBounds.check(_player.x, _player.y);
 		if (direction == NONE) return;
 
-		entrance = cast(_player.collide("exit", _player.x, _player.y), Exit);
+		entrance = cast _player.collide("exit", _player.x, _player.y);
 		if (entrance == null)
 		{
 			_player.kill();
@@ -87,10 +88,10 @@ class Game extends Scene
 	public function moveCamera()
 	{
 		// Set camera on x-axis
-		HXP.camera.x = _player.x - HXP.width / 2 + _player.halfWidth;
+		camera.x = Std.int(_player.x - HXP.width / 2 + _player.halfWidth);
 
 		// Set camera on y-axis
-		HXP.camera.y = _player.y - HXP.height / 2 + _player.halfHeight;
+		camera.y = Std.int(_player.y - HXP.height / 2 + _player.halfHeight);
 
 		_room.levelBounds.camera();
 	}

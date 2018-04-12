@@ -1,8 +1,8 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.HXP;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
 
 class Snake extends Enemy
 {
@@ -25,7 +25,8 @@ class Snake extends Enemy
 
 		super(x, y, 8 * level + 8);
 		var anim:Int = level * 6;
-		sprite = new Spritemap("gfx/enemies/snake.png", 8, 8, onSpriteEnd);
+		sprite = new Spritemap("gfx/enemies/snake.png", 8, 8);
+		sprite.onAnimationComplete.bind(onSpriteEnd);
 		sprite.add("slither", [anim + 0, anim + 1, anim + 2], 12);
 		sprite.add("poof", [anim + 3, anim + 4, anim + 5], 6);
 		graphic = sprite;
@@ -60,9 +61,9 @@ class Snake extends Enemy
 		velocity.x = -_moveSpeed;
 	}
 
-	public function onSpriteEnd()
+	public function onSpriteEnd(_)
 	{
-		switch(sprite.currentAnim)
+		switch(sprite.currentAnimation.ensure().name)
 		{
 			case "poof":
 				scene.remove(this);
@@ -79,11 +80,11 @@ class Snake extends Enemy
 
 		if (velocity.x > 0)
 		{
-			sprite.flipped = true;
+			sprite.flipX = true;
 		}
 		else if (velocity.x < 0)
 		{
-			sprite.flipped = false;
+			sprite.flipX = false;
 		}
 
 		sprite.play("slither");

@@ -1,7 +1,7 @@
 package com.matttuttle.entities.weapons;
 
-import com.haxepunk.Entity;
-import com.haxepunk.HXP;
+import haxepunk.Entity;
+import haxepunk.HXP;
 import com.matttuttle.scenes.Game;
 import com.matttuttle.entities.Physics;
 import com.matttuttle.entities.enemies.Enemy;
@@ -10,7 +10,7 @@ import com.matttuttle.entities.Player;
 class Weapon extends Physics
 {
 
-	public var attack:Int;
+	public var attack:Int = 1;
 
 	public function new(name:String)
 	{
@@ -33,16 +33,12 @@ class Weapon extends Physics
 
 	private function hitEnemy():Bool
 	{
-		var e = collide("enemy", x, y);
-		if (e != null)
+		var e:Enemy = cast collide("enemy", x, y);
+		if (e != null && !e.dead)
 		{
-			var obj = cast(e, Enemy);
-			if (obj != null && obj.dead == false)
-			{
-				obj.hurt(attack);
-				_player.experience += obj.experience;
-				return true;
-			}
+			e.hurt(attack);
+			_player.experience += e.experience;
+			return true;
 		}
 		return false;
 	}

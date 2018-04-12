@@ -1,6 +1,6 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.Entity;
+import haxepunk.Entity;
 
 class Spikes extends Enemy
 {

@@ -1,9 +1,9 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.HXP;
+import haxepunk.HXP;
 import com.matttuttle.entities.Physics;
-import com.haxepunk.Entity;
-import com.haxepunk.graphics.Spritemap;
+import haxepunk.Entity;
+import haxepunk.graphics.Spritemap;
 
 class Zombie extends Enemy
 {
@@ -13,7 +13,8 @@ class Zombie extends Enemy
 	public function new(x:Float, y:Float, target:Entity)
 	{
 		super(x, y, 40);
-		sprite = new Spritemap("gfx/enemies/zombie.png", 8, 8, onSpriteEnd);
+		sprite = new Spritemap("gfx/enemies/zombie.png", 8, 8);
+		sprite.onAnimationComplete.bind(onSpriteEnd);
 		sprite.add("idle", [0]);
 		sprite.add("emerge", [0, 1, 2, 3, 4], 8, false);
 		sprite.add("walk", [5, 6, 7, 6], 4);
@@ -34,9 +35,9 @@ class Zombie extends Enemy
 		defense = 5;
 	}
 
-	public function onSpriteEnd()
+	public function onSpriteEnd(_)
 	{
-		switch(sprite.currentAnim)
+		switch(sprite.currentAnimation.ensure().name)
 		{
 			case "emerge":
 				// The zombie has emerged!!!

@@ -1,7 +1,7 @@
 package com.matttuttle.entities.enemies;
 
-import com.haxepunk.HXP;
-import com.haxepunk.Entity;
+import haxepunk.HXP;
+import haxepunk.Entity;
 import com.matttuttle.entities.Character;
 import com.matttuttle.entities.items.Coin;
 import com.matttuttle.entities.items.Consumable;

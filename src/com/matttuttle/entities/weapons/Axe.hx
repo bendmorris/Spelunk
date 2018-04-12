@@ -1,8 +1,8 @@
 package com.matttuttle.entities.weapons;
 
-import com.haxepunk.HXP;
-import com.haxepunk.graphics.Spritemap;
-import com.haxepunk.Sfx;
+import haxepunk.HXP;
+import haxepunk.graphics.Spritemap;
+import haxepunk.Sfx;
 import com.matttuttle.entities.Player;
 import com.matttuttle.entities.Physics;
 
@@ -14,7 +14,8 @@ class Axe extends Melee
 		super("Axe");
 		_animName = "axe";
 
-		sprite = new Spritemap("gfx/items/axe.png", 16, 16, onSpriteEnd);
+		sprite = new Spritemap("gfx/items/axe.png", 16, 16);
+		sprite.onAnimationComplete.bind(onSpriteEnd);
 		sprite.add(_animName, [0, 1, 2, 3], 10, false);
 		sprite.visible = false;
 		graphic = sprite;
@@ -32,15 +33,15 @@ class Axe extends Melee
 			{
 				case 0:
 					offY = -4;
-					if (sprite.flipped) offX = -9;
+					if (sprite.flipX) offX = -9;
 				case 1:
 					offX = -4;
 				case 2:
 					offY = -4;
-					if (!sprite.flipped) offX = -9;
+					if (!sprite.flipX) offX = -9;
 				case 3:
 					offY = -8;
-					if (!sprite.flipped) offX = -9;
+					if (!sprite.flipX) offX = -9;
 			}
 			setHitbox(7, 7, offX, offY);
 		}

@@ -1,7 +1,7 @@
 package com.matttuttle.entities;
 
-import flash.geom.Point;
-import com.haxepunk.HXP;
+import haxepunk.math.Vector2;
+import haxepunk.HXP;
 
 class Character extends Physics
 {
@@ -80,7 +80,7 @@ class Character extends Physics
 	}
 
 	public var dead:Bool;
-	private var _spawnPoint:Point;
+	private var _spawnPoint:Vector2;
 	private var _flickerTimer:Float;
 
 }

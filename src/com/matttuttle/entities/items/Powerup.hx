@@ -1,6 +1,6 @@
 package com.matttuttle.entities.items;
 
-import com.haxepunk.Sfx;
+import haxepunk.Sfx;
 import com.matttuttle.entities.Player;
 
 class Powerup extends Item
@@ -38,7 +38,7 @@ class Powerup extends Item
 	override public function apply(player:Player)
 	{
 		player.registerFlag(_powerupName);
-		var sfx:Sfx = new Sfx("sfx/powerups/knife");
+		var sfx:Sfx = new Sfx("sfx/powerups/knife.wav");
 		sfx.play();
 	}
 
